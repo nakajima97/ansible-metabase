@@ -1,0 +1,31 @@
+---
+- name: Remove Docker
+  yum:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - runc
+      - containerd
+    state: absent
+
+- name: Setup Docker yum repository
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+    mode: '0644'
+
+- name: Install rootless docker
+  yum:
+    name:
+      - docker-ce-rootless-extras
+    state: present
+
+- name: Export .bashrc
+  lineinfile:
+    dest: ~/.bashrc
+    line: "{{ item }}"
+  with_items:
+    - "export XDG_RUNTIME_DIR=/run/user/$(id -u)"
+    - "export DOCKER_HOST=unix:///run/user/$(id -u)/docker.sock"
+  become: yes
+  become_user: rootless-docker
