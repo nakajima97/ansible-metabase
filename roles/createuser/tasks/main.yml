@@ -1,0 +1,6 @@
+---
+- name: Create docker user
+  ansible.builtin.user:
+    name: rootless-docker
+    password: "{{ password }}"
+    shell: /bin/bash

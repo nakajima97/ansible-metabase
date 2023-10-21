@@ -1,0 +1,9 @@
+---
+all:
+  hosts:
+    target:
+      ansible_host:
+      ansible_user:
+      ansible_ssh_private_key_file:
+      ansible_python_interpreter:
+      ansible_port:

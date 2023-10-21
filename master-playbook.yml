@@ -1,0 +1,6 @@
+---
+- name: Create user
+  hosts: target
+  become: true
+  roles:
+    - createuser
